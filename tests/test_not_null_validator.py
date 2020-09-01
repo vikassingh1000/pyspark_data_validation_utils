@@ -24,6 +24,7 @@ def test_null_check_custom_msg(spark_session):
 
     invaild_df_expected = [Row(a=2, b=None, exception_desc='|field2 is empty |')]
     vaild_df_expected = [Row(a=1, b='dummy')]
+    print("This is test")
 
     assert invalid_df.collect()== invaild_df_expected
     assert valid_df.collect()== vaild_df_expected
