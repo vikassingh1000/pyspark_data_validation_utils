@@ -1,0 +1,1 @@
+C_OPERATION_NOT_SUPPORTED = 'Operation not supported'

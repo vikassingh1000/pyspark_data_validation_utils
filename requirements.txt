@@ -1,0 +1,4 @@
+pyspark==2.4.3
+pytest==3.6.2
+pytest-spark==0.4.5
+attrs==19.1.0
