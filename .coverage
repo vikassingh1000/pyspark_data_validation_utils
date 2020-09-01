@@ -1,0 +1,12 @@
+[run]
+branch = True
+
+source =
+    script
+omit =
+    tests/*
+    strct/_version.py
+    strct/__init__.py
+    */__init__.py
+[report]
+show_missing = True
