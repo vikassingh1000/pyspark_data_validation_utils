@@ -14,9 +14,10 @@ before_install:
   - pwd
   - export SPARK_HOME=/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7
   - export PATH=$PATH:/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7/bin
-  - export PYTHONPATH="$(pwd)"
+#  - export PYTHONPATH="$(pwd)"
 install:
   - pip install -r requirements.txt
   - pip install -q findspark
+  - pip install ".[test]" .
 script:
   - pytest
