@@ -1,8 +1,8 @@
-from src.org.validator.base_validator import Validator
+from script.org.validator.base_validator import Validator
 from pyspark.sql import functions as sf
 import logging
 
-from src.org.validator.common_util import is_clm_null
+from script.org.validator.common_util import is_clm_null
 
 
 class NotNullValidator(Validator):

@@ -1,7 +1,7 @@
 from pyspark.sql import functions as sf
-from src.org.validator.context import ExceptionValidatorContext
-from src.org.validator.data_validator import DefaultExceptionRecordHandler, ValidatorBuilder
-from src.org.validator.not_null_validator import NotNullValidator
+from script.org.validator.context import ExceptionValidatorContext
+from script.org.validator.data_validator import DefaultExceptionRecordHandler, ValidatorBuilder
+from script.org.validator.not_null_validator import NotNullValidator
 from pyspark.sql import  Row
 
 config  = ExceptionValidatorContext.confg

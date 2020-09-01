@@ -5,9 +5,9 @@ import logging
 from pyspark.sql import DataFrame
 from abc import ABC, abstractmethod
 
-from src.org.validator.base_validator import Validator, IExceptionRecordHandler
-from src.org.validator.common_util import is_clm_null
-from src.org.validator.context import ExceptionValidatorContext
+from script.org.validator.base_validator import Validator, IExceptionRecordHandler
+from script.org.validator.common_util import is_clm_null
+from script.org.validator.context import ExceptionValidatorContext
 
 from pyspark.sql import functions as sf
 

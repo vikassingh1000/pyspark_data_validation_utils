@@ -1,5 +1,5 @@
 from pyspark.sql import functions as sf
-from src.org.validator.context import ExceptionValidatorContext
+from script.org.validator.context import ExceptionValidatorContext
 
 
 def is_clm_null(clm):

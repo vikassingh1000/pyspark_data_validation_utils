@@ -5,7 +5,7 @@ import logging
 from pyspark.sql import DataFrame
 from abc import ABC, abstractmethod
 
-from src.org.validator.context import ExceptionValidatorContext
+from script.org.validator.context import ExceptionValidatorContext
 
 
 class IDataValidator(ABC):

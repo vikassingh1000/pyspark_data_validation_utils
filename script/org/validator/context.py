@@ -1,4 +1,4 @@
-from src.org.validator.config import Configuration
+from script.org.validator.config import Configuration
 
 
 class ExceptionValidatorContext(object):
