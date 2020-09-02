@@ -28,7 +28,6 @@ setup(
     author="Vikas Singh",
     author_email="vikassingh1000@gmail.com",
     version=.1,
-    cmdclass="",
     url='https://github.com/vikassingh1000/pyspark_data_validation_utils',
     license="MIT",
     packages=find_packages(exclude=['dist', 'docs', 'tests']),
