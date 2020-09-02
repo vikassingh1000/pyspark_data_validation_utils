@@ -3,6 +3,9 @@ from script.org.validator.context import ExceptionValidatorContext
 from script.org.validator.data_validator import DefaultExceptionRecordHandler, ValidatorBuilder
 
 from pyspark.sql import  Row
+import logging
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+logging.info('Admin logged in')
 
 from script.org.validator.equal_validator import EqualValidator
 

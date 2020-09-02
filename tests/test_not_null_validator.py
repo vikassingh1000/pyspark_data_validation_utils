@@ -5,6 +5,9 @@ from script.org.validator.not_null_validator import NotNullValidator
 from pyspark.sql import  Row
 
 config  = ExceptionValidatorContext.confg
+import logging
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+logging.info('Admin logged in')
 
 def test_null_check_custom_msg(spark_session):
 
