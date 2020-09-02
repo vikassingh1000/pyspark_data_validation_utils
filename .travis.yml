@@ -22,6 +22,7 @@ install:
   - pip3 install -q findspark
   - pip3 install codecov
   - pip3 install --upgrade pip setuptools wheel
+  - pip3 install ".[test]"
 script:
   - python3 -m pytest
 after_success:
