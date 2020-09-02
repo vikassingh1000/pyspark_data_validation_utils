@@ -1,7 +1,5 @@
-
-
 from pyspark.sql import Column
-
+from pyspark.sql import functions as sf
 from script.org.validator.base_validator import Validator
 import logging
 
