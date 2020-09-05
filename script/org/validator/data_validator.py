@@ -70,7 +70,7 @@ class DataValidator(IDataValidator):
 
         if ExceptionValidatorContext.confg.excp_msg_agg:
             self.logger.info("Exception message would be aggregated so, create column with name {} and value {} ".format(self.excp_clm_nm, self.sep))
-            p_df_to_validate = p_df_to_validate.withColumn(self.excp_clm_nm, sf.lit(self.sep))
+            p_df_to_validate = p_df_to_validate.withColumn(self.excp_clm_nm, sf.lit(""))
 
         for l_clm, l_validator in p_clmn_to_validator.items():
             p_df_to_validate = self._validate_clm(l_validator, p_df_to_validate, l_clm)
