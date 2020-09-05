@@ -15,15 +15,11 @@ before_install:
   - export SPARK_HOME=/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7
   - export PATH=$PATH:/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7/bin
   - export PYTHONPATH="$(pwd)"
-before_install:
-  - pip3 install -U pip
 install:
-  - pip3 install -r requirements.txt
-  - pip3 install -q findspark
-  - pip3 install codecov
-  - pip3 install --upgrade pip setuptools wheel
-  - pip3 install ".[test]"
+  - pip install -r requirements.txt
+  - pip install -q findspark
+  - pip install codecov
 script:
-  - python3 -m pytest
+  - pytest
 after_success:
-  - python3 -m codecov
+  - codecov

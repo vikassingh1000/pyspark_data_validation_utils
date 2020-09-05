@@ -9,7 +9,6 @@ logging.info('Admin logged in')
 
 from script.org.validator.equal_validator import EqualValidator
 
-config  = ExceptionValidatorContext.confg
 
 
 def test_equl_check_with_list_value_non_agg_msg_custom_msg(spark_session):
@@ -70,14 +69,11 @@ def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
     assert valid_df.collect()== vaild_df_expected
     ExceptionValidatorContext.confg.excp_msg_agg= True
 
-
 def test_equl_check_with_list_value_custom_msg(spark_session):
 
     # Check UDF.
-    custom_msg_lmda_frg = lambda p_clm, validate_against : sf.concat(sf.col(ExceptionValidatorContext.confg.excep_clm_name), sf.lit("Allowed value for column {} are {} ".format(p_clm,str(validate_against))),
-                                                                     sf.lit(ExceptionValidatorContext.confg.exception_msg_seperator))
-    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col(ExceptionValidatorContext.confg.excep_clm_name), sf.lit("Column  {}, must have value from one of allowed values:{} ".format(p_clm,str(validate_against))),
-                                                                        sf.lit(ExceptionValidatorContext.confg.exception_msg_seperator))
+    custom_msg_lmda_frg = lambda p_clm, validate_against :  sf.lit("Allowed value for column {} are {} ".format(p_clm,str(validate_against)))
+    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.lit("Column  {}, must have value from one of allowed values:{} ".format(p_clm,str(validate_against)))
     VALIDATE_AGAINST_MAP = {
         "foreign_key1": [EqualValidator(p_validate_against=["foreign_key1","foreign_key2"],custom_msg_lmda=custom_msg_lmda_frg)],
         "field2": [EqualValidator(p_validate_against=["dummy","foreign_key2"],custom_msg_lmda=custom_msg_lmda_field2)],
@@ -93,7 +89,7 @@ def test_equl_check_with_list_value_custom_msg(spark_session):
     invalid_df.show(10,False)
     print(invalid_df.collect())
 
-    invaild_df_expected = [Row(a=2, b=None, c="invaild" , exception_desc="|Allowed value for column foreign_key1 are ['foreign_key1', 'foreign_key2'] |Column  field2, must have value from one of allowed values:['dummy', 'foreign_key2'] |")]
+    invaild_df_expected = [Row(a=2, b=None, c="invaild" , exception_desc="Allowed value for column foreign_key1 are ['foreign_key1', 'foreign_key2'] |Column  field2, must have value from one of allowed values:['dummy', 'foreign_key2'] |")]
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
     valid_df.show()
@@ -104,9 +100,7 @@ def test_equl_check_with_list_value_custom_msg(spark_session):
 
 def test_equl_check_with_column_value_custom_msg(spark_session):
     config  = ExceptionValidatorContext.confg
-    custom_msg_lmda = lambda p_clm, validate_against : sf.concat(sf.col(config.excep_clm_name),
-                                                                 sf.lit(f"Column {p_clm}, should be matching with: "), validate_against,
-                                                                 sf.lit(config.exception_msg_seperator))
+    custom_msg_lmda = lambda p_clm, validate_against : sf.concat(sf.lit(f"Column {p_clm}, should be matching with: "), validate_against)
     VALIDATE_AGAINST_MAP = {
         "foreign_key1": [EqualValidator(p_validate_against=sf.col("foreign_key2"), custom_msg_lmda = custom_msg_lmda)],
     }
@@ -121,7 +115,7 @@ def test_equl_check_with_column_value_custom_msg(spark_session):
     invalid_df.show(10,False)
     print(invalid_df.collect())
 
-    invaild_df_expected = [Row(a=2, b=None, c="invaild" ,d="foreign_key2", exception_desc='|Column foreign_key1, should be matching with: foreign_key2|')]
+    invaild_df_expected = [Row(a=2, b=None, c="invaild" ,d="foreign_key2", exception_desc='Column foreign_key1, should be matching with: foreign_key2|')]
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
     vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1",foreign_key2="foreign_key1" )]
@@ -146,7 +140,7 @@ def test_equl_check_with_column_value_default_msg(spark_session):
     invalid_df.show(10,False)
     print(invalid_df.collect())
 
-    invaild_df_expected = [Row(a=2, b=None, c="invaild" ,d="foreign_key2", exception_desc='|foreign_key1 is not matching with expected value of:foreign_key2|')]
+    invaild_df_expected = [Row(a=2, b=None, c="invaild" ,d="foreign_key2", exception_desc='foreign_key1 is not matching with expected value of:foreign_key2|')]
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
     vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1",foreign_key2="foreign_key1" )]
@@ -155,10 +149,8 @@ def test_equl_check_with_column_value_default_msg(spark_session):
     assert valid_df.collect()== vaild_df_expected
 
 def test_equl_check_with_default_value_custom_msg(spark_session):
-    config  = ExceptionValidatorContext.confg
-    sep = config.exception_msg_seperator
-    custom_msg_lmda = lambda p_clm, validate_against : sf.concat(sf.col(config.excep_clm_name),
-                                                                 sf.lit(f"{p_clm} should match with allowed value: dummy {sep}"))
+
+    custom_msg_lmda = lambda p_clm, validate_against : sf.lit(f"{p_clm} should match with allowed value: dummy")
     # logger.info("---" + custom_msg_lmda)
     VALIDATE_AGAINST_MAP = {
         "field2": [EqualValidator(p_validate_against="dummy",custom_msg_lmda=custom_msg_lmda)],
@@ -174,7 +166,7 @@ def test_equl_check_with_default_value_custom_msg(spark_session):
     invalid_df.show(10,False)
     print(invalid_df.collect())
 
-    invaild_df_expected = [Row(a=2, b=None, c="foreign_key2" , exception_desc='|field2 should match with allowed value: dummy |')]
+    invaild_df_expected = [Row(a=2, b=None, c="foreign_key2" , exception_desc='field2 should match with allowed value: dummy|')]
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
     vaild_df_expected = [Row(a=1, b='dummy',foreign_key="foreign_key1")]
@@ -197,7 +189,7 @@ def test_equl_check_with_default_value(spark_session):
     invalid_df.show(10,False)
     print(invalid_df.collect())
 
-    invaild_df_expected = [Row(a=2, b=None, c="foreign_key2" , exception_desc='|field2 is not matching with expected value:dummy|')]
+    invaild_df_expected = [Row(a=2, b=None, c="foreign_key2" , exception_desc='field2 is not matching with expected value:dummy|')]
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
     vaild_df_expected = [Row(a=1, b='dummy',foreign_key="foreign_key1")]

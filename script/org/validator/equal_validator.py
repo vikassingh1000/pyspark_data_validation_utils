@@ -3,6 +3,7 @@ from pyspark.sql import functions as sf
 from script.org.validator.base_validator import Validator
 import logging
 
+
 class EqualValidator(Validator):
     validate_against = None
     default_exp_message_for_list = "{clm} is not matching in given values: {value}"

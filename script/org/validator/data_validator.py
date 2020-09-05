@@ -1,15 +1,13 @@
-
-from pyspark.sql import functions as sf
 import logging
+from abc import ABC, abstractmethod
 
 from pyspark.sql import DataFrame
-from abc import ABC, abstractmethod
+from pyspark.sql import functions as sf
 
 from script.org.validator.base_validator import Validator, IExceptionRecordHandler
 from script.org.validator.common_util import is_clm_null
 from script.org.validator.context import ExceptionValidatorContext
 
-from pyspark.sql import functions as sf
 
 class IDataValidator(ABC):
 
