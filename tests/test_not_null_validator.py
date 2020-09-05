@@ -1,19 +1,12 @@
 from pyspark.sql import functions as sf
-from script.org.validator.context import ExceptionValidatorContext
 from script.org.validator.data_validator import DefaultExceptionRecordHandler, ValidatorBuilder
 from script.org.validator.not_null_validator import NotNullValidator
 from pyspark.sql import  Row
 
-config  = ExceptionValidatorContext.confg
 import logging
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 logging.info('Admin logged in')
 
-
-config  = ExceptionValidatorContext.confg
-import logging
-logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
-logging.info('Admin logged in')
 
 def test_null_check_custom_msg(spark_session):
 
@@ -98,14 +91,11 @@ def test_null_check(spark_session):
 
     assert invalid_df.collect()== invaild_df_expected
     assert valid_df.collect()== vaild_df_expected
-
 def test_null_check_custom_msg_with_clm_name(spark_session):
     config  = ExceptionValidatorContext.confg
 
-    custom_msg_lmda_field1 = lambda p_clm, validate_against : sf.concat(sf.col(config.excep_clm_name), sf.lit(f"{p_clm} is empty "),
-                                                                        sf.lit(config.exception_msg_seperator))
-    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col(config.excep_clm_name), sf.col("foreign_key"), sf.lit(" is not present in system"),
-                                                                        sf.lit(config.exception_msg_seperator))
+    custom_msg_lmda_field1 = lambda p_clm, validate_against : sf.lit(f"{p_clm} is empty ")
+    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col("foreign_key"), sf.lit(" is not present in system"))
 
     # p_lookup_clm_nme = "foreign_key" ,p_excep_msg = "Foreign key not present in system: "
     C_FACT_CLASS_ENTITY_FIELD_TO_VALIDATE_AGAINST = {
