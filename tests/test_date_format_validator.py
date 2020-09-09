@@ -1,8 +1,6 @@
 from pyspark.sql import functions as sf
-from script.org.validator.context import ExceptionValidatorContext
 from script.org.validator.data_validator import DefaultExceptionRecordHandler, ValidatorBuilder
 
-from pyspark.sql import  Row
 import logging
 
 from script.org.validator.date_format_validator import DateFormatValidator
@@ -25,7 +23,6 @@ def test_date_format_custom_msg_non_agg_mutlie_clms(spark_session):
         "doj": [DateFormatValidator(p_format=date_format, custom_msg_lmda=custom_msg_lmda)],
     }
 
-
     test_df = spark_session.createDataFrame([[1, "dummy", "2020-10-12", "2012-12-12"], [2,None,"12-10-2012", "dude never joined"]], "field1: int, field2: string, dob:String, doj:string")
 
     excep_record_handler = DefaultExceptionRecordHandler()
@@ -41,7 +38,6 @@ def test_date_format_custom_msg_non_agg_mutlie_clms(spark_session):
     print(invalid_df.collect())
     assert compare_df(invalid_df,invaild_df_expected)
     assert compare_df(valid_df,vaild_df_expected)
-    ExceptionValidatorContext.confg.excp_msg_agg= True
 
 def test_date_format_custom_msg_non_agg(spark_session):
 
@@ -67,8 +63,6 @@ def test_date_format_custom_msg_non_agg(spark_session):
 
     assert compare_df(invalid_df,invaild_df_expected)
     assert compare_df(valid_df,vaild_df_expected)
-    ExceptionValidatorContext.confg.excp_msg_agg= True
-
 
 def test_date_format_custom_msg(spark_session):
 
@@ -95,9 +89,6 @@ def test_date_format_custom_msg(spark_session):
     print(invalid_df.collect())
     assert compare_df(invalid_df,invaild_df_expected)
     assert compare_df(valid_df,vaild_df_expected)
-    ExceptionValidatorContext.confg.excp_msg_agg= True
-
-
 
 def test_date_format_defaulf_msg(spark_session):
 
@@ -120,4 +111,3 @@ def test_date_format_defaulf_msg(spark_session):
 
     assert compare_df(invalid_df,invaild_df_expected)
     assert compare_df(valid_df,vaild_df_expected)
-    ExceptionValidatorContext.confg.excp_msg_agg= True

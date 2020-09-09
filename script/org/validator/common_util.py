@@ -1,13 +1,11 @@
 from pyspark.sql import functions as sf
-from script.org.validator.context import ExceptionValidatorContext
 
-
-def is_clm_null(clm):
+def is_clm_null(clm,confg):
 
     if  isinstance(clm, str):
         clm = sf.col(clm)
 
-    if ExceptionValidatorContext.confg.empty_mean_null:
+    if confg.empty_mean_null:
 
         return clm.isNull() | ( clm==sf.lit(""))
 

@@ -23,7 +23,7 @@ class NotNullValidator(Validator):
 
     def _compare_function(self,clm,validate_against):
         # creating wrapper around is_clm_null as compare_function suppose to recieve mutliple param, but is_null suppose to recive only one
-        return lambda p_clm, *col : is_clm_null(p_clm)
+        return lambda p_clm, *col : is_clm_null(p_clm,self.confg)
 
     def _provide_custom_msg_lmda(self,p_clm,exp_clm_name):
 

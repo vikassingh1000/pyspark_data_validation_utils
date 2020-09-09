@@ -1,10 +1,11 @@
-from script.org.validator.context import ExceptionValidatorContext
 
 from pyspark.sql import functions as sf
 import logging
 
 from pyspark.sql import DataFrame
 from abc import ABC, abstractmethod
+
+from script.org.validator.config import Configuration
 
 
 class IDataValidator(ABC):
@@ -15,8 +16,9 @@ class IDataValidator(ABC):
 
 
 class Validator(ABC):
-    sep = ExceptionValidatorContext.confg.exception_msg_seperator
-    excep_desc_clm_name = ExceptionValidatorContext.confg.excep_clm_name
+    confg = Configuration()
+    sep = confg.exception_msg_seperator
+    excep_desc_clm_name = confg.excep_clm_name
     excp_msg_clm_provider = None
 
     @abstractmethod
@@ -53,14 +55,14 @@ class Validator(ABC):
 
     def _clm_sticher(self, excp_clm_name, *col):
 
-        if ExceptionValidatorContext.confg.excp_msg_agg:
+        if self.confg.excp_msg_agg:
             return sf.concat(sf.col(excp_clm_name), *col)
         else:
             return sf.concat(*col)
 
     def _default_val_for_valida_rec(self, excp_clm_name):
 
-        if ExceptionValidatorContext.confg.excp_msg_agg:
+        if self.confg.excp_msg_agg:
             return sf.col(excp_clm_name)
         else:
             return sf.lit(None)
@@ -68,7 +70,7 @@ class Validator(ABC):
     def _excp_msg_clm_name_provider(self, clm_under_validation):
         excp_clm_name = None
         if self.excp_msg_clm_provider is None:
-            excp_clm_name = ExceptionValidatorContext.confg.excep_clm_name
+            excp_clm_name = self.confg.excep_clm_name
             self.logger.info("Using default_excp_clm_name {}".format(excp_clm_name))
         else:
 

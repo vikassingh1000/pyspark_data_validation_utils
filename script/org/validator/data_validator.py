@@ -6,8 +6,6 @@ from pyspark.sql import functions as sf
 
 from script.org.validator.base_validator import Validator, IExceptionRecordHandler
 from script.org.validator.common_util import is_clm_null
-from script.org.validator.context import ExceptionValidatorContext
-
 
 class IDataValidator(ABC):
 
@@ -22,12 +20,12 @@ class DataValidator(IDataValidator):
     exception_rec_handler= None
     df_to_validate = None
     excp_msg_clm_provider = None
-
+    confg= None
 
     logger = logging.getLogger('example_logger')
 
-    excp_clm_nm = ExceptionValidatorContext.confg.excep_clm_name
-    sep = ExceptionValidatorContext.confg.exception_msg_seperator
+    excp_clm_nm = confg.excep_clm_name
+    sep = confg.exception_msg_seperator
 
     def validate(self):
 
@@ -47,9 +45,9 @@ class DataValidator(IDataValidator):
 
         for clm in li_dif:
             if excp_rec_cond is None:
-                excp_rec_cond = (~is_clm_null(clm) & (sf.col(clm)!=self.sep))
+                excp_rec_cond = (~is_clm_null(clm,self.confg) & (sf.col(clm)!=self.sep))
             else:
-                excp_rec_cond =  excp_rec_cond | (~is_clm_null(clm) &(sf.col(clm)!=self.sep))
+                excp_rec_cond =  excp_rec_cond | (~is_clm_null(clm,self.confg) &(sf.col(clm)!=self.sep))
 
 
         #TODO: Need to think if we should compare once and store boolean then use boolean for filtering
@@ -68,7 +66,7 @@ class DataValidator(IDataValidator):
     def _validate_rec(self,p_df_to_validate, p_clmn_to_validator):
         self.logger.info("Starting Validating records column using given validators :{}".format(p_clmn_to_validator))
 
-        if ExceptionValidatorContext.confg.excp_msg_agg:
+        if self.confg.excp_msg_agg:
             self.logger.info("Exception message would be aggregated so, create column with name {} and value {} ".format(self.excp_clm_nm, self.sep))
             p_df_to_validate = p_df_to_validate.withColumn(self.excp_clm_nm, sf.lit(""))
 
@@ -83,19 +81,19 @@ class DataValidator(IDataValidator):
 
         if isinstance(p_validator, list):
             for l_val in p_validator:
-                l_val.set_excp_clm_provider(self.excp_msg_clm_provider)
-                p_df_to_validate = l_val.validate(p_df_to_validate, p_clm)
-
-
+                p_df_to_validate = self.call_validator(l_val, p_clm, p_df_to_validate)
         elif isinstance(p_validator, Validator):
-            p_validator.set_excp_clm_provider(self.excp_msg_clm_provider)
-            p_df_to_validate = p_validator.validate(p_df_to_validate, p_clm)
+            null = self.call_validator(p_validator, p_clm, p_df_to_validate)
         else:
-            #TODO: Change it
             raise Exception('Validator could be list of  Validators or single validator, however received: {} '.format(type(p_validator)))
         self.logger.info("Validation of column is Done")
         return p_df_to_validate
 
+    def call_validator(self, l_val, p_clm, p_df_to_validate):
+        l_val.set_excp_clm_provider(self.excp_msg_clm_provider)
+        l_val.confg=self.confg
+        p_df_to_validate = l_val.validate(p_df_to_validate, p_clm)
+        return p_df_to_validate
 
 
 class ValidatorBuilder(ABC):
@@ -130,11 +128,10 @@ class ValidatorBuilder(ABC):
         #     raise Exception("Exception validation should be Dict")
         self.data_validator.df_to_validate = vali_rec_Df
         return self
-    # def validation_context(self, context) :
-    #     if ~isinstance(context, ExceptionValidatorContext):
-    #         raise Exception("Validation context in no validate")
-    #     self.data_validator.context = context
-    #     return self
+
+    def add_config(self, config):
+        self.data_validator.confg = config
+        return self
 
     def build(self):
         return self.data_validator
