@@ -27,9 +27,12 @@ class DataValidator(IDataValidator):
     logger = logging.getLogger('example_logger')
 
     def __init__(self):
-        self.excp_clm_nm =self. confg.excep_clm_name
+        self.add_config(Configuration())
+
+    def add_config(self, config):
+        self.confg= config
+        self.excp_clm_nm =self.confg.excep_clm_name
         self.sep = self.confg.exception_msg_seperator
-        self.confg= Configuration()
 
     def validate(self):
 
@@ -134,7 +137,7 @@ class ValidatorBuilder(ABC):
         return self
 
     def add_config(self, config):
-        self.data_validator.confg = config
+        self.data_validator.add_config(config)
         return self
 
     def build(self):
