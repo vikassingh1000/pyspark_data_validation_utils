@@ -94,7 +94,6 @@ def test_null_check(spark_session):
     assert invalid_df.collect()== invaild_df_expected
     assert valid_df.collect()== vaild_df_expected
 def test_null_check_custom_msg_with_clm_name(spark_session):
-    config  = ExceptionValidatorContext.confg
 
     custom_msg_lmda_field1 = lambda p_clm, validate_against : sf.lit(f"{p_clm} is empty ")
     custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col("foreign_key"), sf.lit(" is not present in system"))
