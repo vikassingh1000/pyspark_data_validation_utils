@@ -16,10 +16,16 @@ class IDataValidator(ABC):
 
 
 class Validator(ABC):
-    confg = Configuration()
-    sep = confg.exception_msg_seperator
-    excep_desc_clm_name = confg.excep_clm_name
+
     excp_msg_clm_provider = None
+
+    def __init__(self):
+        self.set_config(Configuration())
+
+    def set_config(self, confg):
+        self.confg = confg
+        self.sep = self.confg.exception_msg_seperator
+        self.excep_desc_clm_name =self. confg.excep_clm_name
 
     @abstractmethod
     def validate(self, df_to_validate, clm, exception_context) -> None:

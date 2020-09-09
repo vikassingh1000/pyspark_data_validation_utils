@@ -5,7 +5,7 @@ def is_clm_null(clm,confg):
     if  isinstance(clm, str):
         clm = sf.col(clm)
 
-    if confg.empty_mean_null:
+    if self.confg.empty_mean_null:
 
         return clm.isNull() | ( clm==sf.lit(""))
 

@@ -6,6 +6,8 @@ from pyspark.sql import functions as sf
 
 from script.org.validator.base_validator import Validator, IExceptionRecordHandler
 from script.org.validator.common_util import is_clm_null
+from script.org.validator.config import Configuration
+
 
 class IDataValidator(ABC):
 
@@ -20,12 +22,14 @@ class DataValidator(IDataValidator):
     exception_rec_handler= None
     df_to_validate = None
     excp_msg_clm_provider = None
-    confg= None
+
 
     logger = logging.getLogger('example_logger')
 
-    excp_clm_nm = confg.excep_clm_name
-    sep = confg.exception_msg_seperator
+    def __init__(self):
+        self.excp_clm_nm =self. confg.excep_clm_name
+        self.sep = self.confg.exception_msg_seperator
+        self.confg= Configuration()
 
     def validate(self):
 
@@ -91,7 +95,7 @@ class DataValidator(IDataValidator):
 
     def call_validator(self, l_val, p_clm, p_df_to_validate):
         l_val.set_excp_clm_provider(self.excp_msg_clm_provider)
-        l_val.confg=self.confg
+        l_val.set_config(self.confg)
         p_df_to_validate = l_val.validate(p_df_to_validate, p_clm)
         return p_df_to_validate
 
