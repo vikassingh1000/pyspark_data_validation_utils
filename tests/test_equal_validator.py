@@ -72,36 +72,6 @@ def test_equl_check_with_list_value_custom_msg(spark_session):
     assert valid_df.collect()== vaild_df_expected
 
 
-def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
-
-
-    config = Configuration()
-    config.excp_msg_agg = False
-    # custom_msg_lmda = lambda p_clm, validate_against, sep : sf.concat(sf.col('exception_desc'), sf.lit("Column {}, should be matching with: ".format(p_clm)), validate_against, sf.lit(sep))
-    excp_msg_clm_provider = lambda clm: clm + "_error_1"
-    VALIDATE_AGAINST_MAP = {
-        "foreign_key1": [EqualValidator(p_validate_against=["foreign_key1","foreign_key2"], excp_msg_clm_provider =excp_msg_clm_provider)],
-        "field2": [EqualValidator(p_validate_against=["dummy","foreign_key2"],excp_msg_clm_provider = excp_msg_clm_provider)],
-    }
-
-
-    test_df = spark_session.createDataFrame([[1, "dummy", "foreign_key1"], [2,None,"invaild"]], "field1: int, field2: string, foreign_key1:String")
-
-    excep_record_handler = DefaultExceptionRecordHandler()
-    val_builder = ValidatorBuilder()
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(VALIDATE_AGAINST_MAP)\
-                                                    .add_validate_rec_df(test_df).add_config(config).add_excp_msg_clm_provider(excp_msg_clm_provider).build()
-    valid_df,invalid_df = data_val.validate()
-
-    invaild_df_expected = [Row(a=2, b=None, c="invaild" , d="foreign_key1 is not matching in given values: ['foreign_key1', 'foreign_key2']|",e ="field2 is not matching in given values: ['dummy', 'foreign_key2']|" )]
-    print( invalid_df.collect()[0])
-    print(invaild_df_expected[0])
-
-    vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1" )]
-
-    assert invalid_df.collect()== invaild_df_expected
-    assert valid_df.collect()== vaild_df_expected
-
 def test_equl_check_with_column_value_custom_msg(spark_session):
     custom_msg_lmda = lambda p_clm, validate_against : sf.concat(sf.lit(f"Column {p_clm}, should be matching with: "), validate_against)
     VALIDATE_AGAINST_MAP = {
