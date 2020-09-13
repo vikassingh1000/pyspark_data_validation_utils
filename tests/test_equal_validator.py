@@ -42,6 +42,36 @@ def test_equl_check_with_list_value_non_agg_msg_custom_msg(spark_session):
     assert valid_df.collect()== vaild_df_expected
 
 
+def test_equl_check_with_list_value_custom_msg(spark_session):
+
+    # Check UDF.
+    custom_msg_lmda_frg = lambda p_clm, validate_against :  sf.lit("Allowed value for column {} are {} ".format(p_clm,str(validate_against)))
+    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.lit("Column  {}, must have value from one of allowed values:{} ".format(p_clm,str(validate_against)))
+    VALIDATE_AGAINST_MAP = {
+        "foreign_key1": [EqualValidator(p_validate_against=["foreign_key1","foreign_key2"],custom_msg_lmda=custom_msg_lmda_frg)],
+        "field2": [EqualValidator(p_validate_against=["dummy","foreign_key2"],custom_msg_lmda=custom_msg_lmda_field2)],
+    }
+
+
+    test_df = spark_session.createDataFrame([[1, "dummy", "foreign_key1"], [2,None,"invaild"]], "field1: int, field2: string, foreign_key1:String")
+
+    excep_record_handler = DefaultExceptionRecordHandler()
+    val_builder = ValidatorBuilder()
+    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(VALIDATE_AGAINST_MAP).add_validate_rec_df(test_df).build()
+    valid_df,invalid_df = data_val.validate()
+    invalid_df.show(10,False)
+    print(invalid_df.collect())
+
+    invaild_df_expected = [Row(a=2, b=None, c="invaild" , exception_desc="Allowed value for column foreign_key1 are ['foreign_key1', 'foreign_key2'] |Column  field2, must have value from one of allowed values:['dummy', 'foreign_key2'] |")]
+    print( invalid_df.collect()[0])
+    print(invaild_df_expected[0])
+    valid_df.show()
+    vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1" )]
+
+    assert invalid_df.collect()== invaild_df_expected
+    assert valid_df.collect()== vaild_df_expected
+
+
 def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
 
 
@@ -67,35 +97,6 @@ def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
     print( invalid_df.collect()[0])
     print(invaild_df_expected[0])
 
-    vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1" )]
-
-    assert invalid_df.collect()== invaild_df_expected
-    assert valid_df.collect()== vaild_df_expected
-
-def test_equl_check_with_list_value_custom_msg(spark_session):
-
-    # Check UDF.
-    custom_msg_lmda_frg = lambda p_clm, validate_against :  sf.lit("Allowed value for column {} are {} ".format(p_clm,str(validate_against)))
-    custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.lit("Column  {}, must have value from one of allowed values:{} ".format(p_clm,str(validate_against)))
-    VALIDATE_AGAINST_MAP = {
-        "foreign_key1": [EqualValidator(p_validate_against=["foreign_key1","foreign_key2"],custom_msg_lmda=custom_msg_lmda_frg)],
-        "field2": [EqualValidator(p_validate_against=["dummy","foreign_key2"],custom_msg_lmda=custom_msg_lmda_field2)],
-    }
-
-
-    test_df = spark_session.createDataFrame([[1, "dummy", "foreign_key1"], [2,None,"invaild"]], "field1: int, field2: string, foreign_key1:String")
-
-    excep_record_handler = DefaultExceptionRecordHandler()
-    val_builder = ValidatorBuilder()
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(VALIDATE_AGAINST_MAP).add_validate_rec_df(test_df).build()
-    valid_df,invalid_df = data_val.validate()
-    invalid_df.show(10,False)
-    print(invalid_df.collect())
-
-    invaild_df_expected = [Row(a=2, b=None, c="invaild" , exception_desc="Allowed value for column foreign_key1 are ['foreign_key1', 'foreign_key2'] |Column  field2, must have value from one of allowed values:['dummy', 'foreign_key2'] |")]
-    print( invalid_df.collect()[0])
-    print(invaild_df_expected[0])
-    valid_df.show()
     vaild_df_expected = [Row(a=1, b='dummy',d="foreign_key1" )]
 
     assert invalid_df.collect()== invaild_df_expected

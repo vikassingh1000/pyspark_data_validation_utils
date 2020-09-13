@@ -62,8 +62,10 @@ class Validator(ABC):
     def _clm_sticher(self, excp_clm_name, *col):
 
         if self.confg.excp_msg_agg:
+            self.logger.info("Using same colum to concat the errors")
             return sf.concat(sf.col(excp_clm_name), *col)
         else:
+            self.logger.info("Using individual colum to concat the errors")
             return sf.concat(*col)
 
     def _default_val_for_valida_rec(self, excp_clm_name):
