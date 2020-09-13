@@ -5,6 +5,10 @@ from script.org.validator.data_validator import DefaultExceptionRecordHandler, V
 
 from pyspark.sql import  Row
 import logging
+
+from script.org.validator.equal_validator import EqualValidator
+from script.org.validator.not_null_validator import NotNullValidator
+
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 logging.info('Admin logged in')
 
@@ -39,7 +43,8 @@ def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
     assert valid_df.collect()== vaild_df_expected
 
 def test_null_check_custom_msg_with_clm_name(spark_session):
-
+    config = Configuration()
+    config.excp_msg_agg = False
     custom_msg_lmda_field1 = lambda p_clm, validate_against : sf.lit(f"{p_clm} is empty ")
     custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col("foreign_key"), sf.lit(" is not present in system"))
 
@@ -54,7 +59,7 @@ def test_null_check_custom_msg_with_clm_name(spark_session):
 
     excep_record_handler = DefaultExceptionRecordHandler()
     val_builder = ValidatorBuilder()
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(C_FACT_CLASS_ENTITY_FIELD_TO_VALIDATE_AGAINST).add_validate_rec_df(test_df).build()
+    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_config(config).add_validation_map(C_FACT_CLASS_ENTITY_FIELD_TO_VALIDATE_AGAINST).add_validate_rec_df(test_df).build()
     valid_df,invalid_df = data_val.validate()
     invalid_df.show(10,False)
     print(invalid_df.collect())
