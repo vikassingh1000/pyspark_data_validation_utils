@@ -16,6 +16,7 @@ def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
 
 
     config = Configuration()
+    config.excp_msg_agg=True
     # custom_msg_lmda = lambda p_clm, validate_against, sep : sf.concat(sf.col('exception_desc'), sf.lit("Column {}, should be matching with: ".format(p_clm)), validate_against, sf.lit(sep))
     excp_msg_clm_provider = lambda clm: clm + "_error_1"
     VALIDATE_AGAINST_MAP = {
