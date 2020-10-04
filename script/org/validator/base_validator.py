@@ -17,10 +17,11 @@ class IDataValidator(ABC):
 
 class Validator(ABC):
 
-    excp_msg_clm_provider = None
+    excp_clm_provider = None
 
     def __init__(self):
         self.set_config(Configuration())
+        self.excp_clm_provider = None
 
     def set_config(self, confg):
         self.confg = confg
@@ -45,7 +46,7 @@ class Validator(ABC):
     def _add_exeception_msg(self, p_df_to_validate, p_clm, validate_against):
         try:
 
-            exp_clm_name = self._excp_msg_clm_name_provider(p_clm)
+            exp_clm_name = self._excp_msg_clm_name_provider( p_clm)
 
             custom_msg_lmda = self._provide_custom_msg_lmda(p_clm, exp_clm_name)
 
@@ -63,10 +64,10 @@ class Validator(ABC):
 
         if self.confg.excp_msg_agg:
             self.logger.info("Using same colum to concat the errors")
-            return sf.concat(sf.col(excp_clm_name), *col)
+            return sf.concat_ws("",sf.col(excp_clm_name), *col)
         else:
             self.logger.info("Using individual colum to concat the errors")
-            return sf.concat(*col)
+            return sf.concat_ws("",*col)
 
     def _default_val_for_valida_rec(self, excp_clm_name):
 
@@ -75,14 +76,14 @@ class Validator(ABC):
         else:
             return sf.lit(None)
 
-    def _excp_msg_clm_name_provider(self, clm_under_validation):
+    def _excp_msg_clm_name_provider(self,  clm_under_validation):
         excp_clm_name = None
-        if self.excp_msg_clm_provider is None:
+        if self.excp_clm_provider is None:
             excp_clm_name = self.confg.excep_clm_name
             self.logger.info("Using default_excp_clm_name {}".format(excp_clm_name))
         else:
 
-            excp_clm_name = self.excp_msg_clm_provider(clm_under_validation)
+            excp_clm_name = self.excp_clm_provider(clm_under_validation)
             self.logger.info("Using passed column provider {}".format(excp_clm_name))
         return excp_clm_name
 

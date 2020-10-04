@@ -10,7 +10,6 @@ logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 logging.info('Admin logged in')
 
 
-
 def test_date_format_custom_msg_non_agg_mutlie_clms(spark_session):
 
     date_format ="yyyy-mm-dd"

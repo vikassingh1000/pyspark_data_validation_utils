@@ -21,7 +21,7 @@ class DataValidator(IDataValidator):
     clmn_to_validate_against = None
     exception_rec_handler= None
     df_to_validate = None
-    excp_msg_clm_provider = None
+    excp_clm_provider = None
 
 
     logger = logging.getLogger('example_logger')
@@ -97,7 +97,7 @@ class DataValidator(IDataValidator):
         return p_df_to_validate
 
     def call_validator(self, l_val, p_clm, p_df_to_validate):
-        l_val.set_excp_clm_provider(self.excp_msg_clm_provider)
+        l_val.set_excp_clm_provider(self.excp_clm_provider)
         l_val.set_config(self.confg)
         p_df_to_validate = l_val.validate(p_df_to_validate, p_clm)
         return p_df_to_validate
@@ -118,9 +118,9 @@ class ValidatorBuilder(ABC):
         return self
 
 
-    def add_excp_msg_clm_provider(self, excp_msg_clm_provider) :
+    def add_excp_clm_provider(self, excp_clm_provider) :
 
-        self.data_validator.excp_msg_clm_provider = excp_msg_clm_provider
+        self.data_validator.excp_clm_provider = excp_clm_provider
         return self
 
 

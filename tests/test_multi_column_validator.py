@@ -30,7 +30,7 @@ def test_equl_check_with_list_value_non_agg_msg_default_msg(spark_session):
     excep_record_handler = DefaultExceptionRecordHandler()
     val_builder = ValidatorBuilder()
     data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(VALIDATE_AGAINST_MAP) \
-        .add_validate_rec_df(test_df).add_config(config).add_excp_msg_clm_provider(excp_msg_clm_provider).build()
+        .add_validate_rec_df(test_df).add_config(config).add_excp_clm_provider(excp_msg_clm_provider).build()
     valid_df,invalid_df = data_val.validate()
 
     invaild_df_expected = [Row(a=2, b=None, c="invaild" , d="foreign_key1 is not matching in given values: ['foreign_key1', 'foreign_key2']|",e ="field2 is not matching in given values: ['dummy', 'foreign_key2']|" )]
