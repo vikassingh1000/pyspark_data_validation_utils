@@ -23,3 +23,7 @@ script:
   - pytest
 #after_success:
 #  - codecov
+deploy:
+  provider: pypi
+  username: "vikassingh1000"
+  password: "pypi-AgEIcHlwaS5vcmcCJDk4MmQ1NDIyLWQ2NjEtNGM1MS1iOGJlLTA5YjhkZmY5MTQ2MQACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYgYUSOHCCbxCNHtPLDFBzPD6T71IAlbT5ELnDdQiUYkH8"
