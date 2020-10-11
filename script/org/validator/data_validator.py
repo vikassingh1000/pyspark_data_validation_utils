@@ -18,10 +18,10 @@ class IDataValidator(ABC):
 
 # entry location for validation
 class DataValidator(IDataValidator):
-    clmn_to_validate_against = None
-    exception_rec_handler= None
-    df_to_validate = None
-    excp_clm_provider = None
+    # clmn_to_validate_against = None
+    # exception_rec_handler= None
+    # df_to_validate = None
+    # excp_clm_provider = None
 
 
     logger = logging.getLogger('example_logger')

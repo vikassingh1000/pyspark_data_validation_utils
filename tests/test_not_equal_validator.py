@@ -80,43 +80,8 @@ def test_not_equl_validator_custom_msg_multi_columns(spark_session):
     assert compare_df(valid_df,vaild_df_expected)
 
 
-def test_not_equl_validator_custom_msg_multi_columns(spark_session):
-
-    msg_part1="Column {} value's '"
-    trn_msg_part1="Column {} has value:"
-    msg_part2=" expected values are: "
-    custom_msg_lmda = lambda p_clm, validate_against : sf.concat_ws("",sf.lit(trn_msg_part1.format(p_clm)), sf.col(p_clm), sf.lit(msg_part2), sf.lit(str(validate_against)))
-
-    validation_map = {
-        "trn_typ": [NotEqualValidator(['C','D'],custom_msg_lmda=custom_msg_lmda)],
-        "trn_desc": [NotEqualValidator(['Credit','Debit'],custom_msg_lmda=custom_msg_lmda)],
-    }
-
-    test_df = spark_session.createDataFrame([[1, "Credit", "C"], [2,"Debit","D"], [3,"Invaild",None]], "trn_id: int, trn_desc: string, trn_typ:String")
-
-
-    excep_record_handler = DefaultExceptionRecordHandler()
-    val_builder = ValidatorBuilder()
-    config = Configuration()
-    #
-
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_config(config).add_validation_map(validation_map).add_validate_rec_df(test_df).build()
-    valid_df,invalid_df = data_val.validate()
-
-
-    invaild_df_expected = spark_session.createDataFrame([ [3,"Invaild",None,"Column trn_typ has value: expected values are: ['C', 'D']|Column trn_desc has value:Invaild expected values are: ['Credit', 'Debit']|"]], \
-                                                        "trn_id: int, trn_desc: string, trn_typ:String,exception_desc:String ")
-
-
-    vaild_df_expected = spark_session.createDataFrame([[1, "Credit", "C"], [2,"Debit","D"]], "trn_id: int, trn_desc: string, trn_typ:String")
-
-    assert compare_df(invalid_df,invaild_df_expected)
-    assert compare_df(valid_df,vaild_df_expected)
-
-
 def test_not_equl_validator_custom_msg_multi_clm_cust_clm_name(spark_session):
 
-    msg_part1="Column {} value's '"
     trn_msg_part1="Column {} has value:"
     msg_part2=" expected values are: "
 
@@ -198,7 +163,7 @@ def test_not_equl_validator_empty_column(spark_session):
     valid_df,invalid_df = data_val.validate()
 
 
-    invaild_df_expected = spark_session.createDataFrame([ [3,"Invaild",None,"Column trn_typ has invaild value allowed type ['C', 'D'], however it has: |"]], \
+    invaild_df_expected = spark_session.createDataFrame([ [3,"Invaild","","Column trn_typ has invaild value allowed type ['C', 'D'], however it has: |"]], \
                                                         "trn_id: int, trn_desc: string, trn_typ:String, exception_desc:String")
 
 
@@ -206,7 +171,6 @@ def test_not_equl_validator_empty_column(spark_session):
 
     assert compare_df(invalid_df,invaild_df_expected)
     assert compare_df(valid_df,vaild_df_expected)
-
 
 def test_not_equl_validator_vanilla(spark_session):
 
