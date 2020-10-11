@@ -28,11 +28,13 @@ class DataValidator(IDataValidator):
 
     def __init__(self):
         self.add_config(Configuration())
+        self.excp_clm_provider = None
 
     def add_config(self, config):
         self.confg= config
         self.excp_clm_nm =self.confg.excep_clm_name
         self.sep = self.confg.exception_msg_seperator
+
 
     def validate(self):
 
@@ -108,7 +110,8 @@ class ValidatorBuilder(ABC):
     The Builder interface specifies methods for creating the different parts of
     the Validator objects.
     """
-    data_validator = DataValidator()
+    def __init__(self):
+        self.data_validator = DataValidator()
 
     def add_excp_rec_handler(self, excep_rec_handler) :
 
