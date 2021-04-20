@@ -25,7 +25,7 @@ script:
   - pytest --cov-report=xml --cov=script/org/validator tests/
 after_success:
   - codecov
-before_install: cd ..
+before_deploy: cd ..
 deploy:
   provider: pypi
   user: "__token__"
