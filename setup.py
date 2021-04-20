@@ -20,7 +20,7 @@ setup(
     license="APACHE",
     keywords="Pyspark",
     url="https://github.com/vikassingh1000/pyspark_data_validation_utils",
-    packages=["pyspark_data_validation_utils"],
+    packages=["../pyspark_data_validation_utils"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
