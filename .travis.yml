@@ -8,9 +8,9 @@ python:
   - "3.6"
 before_install:
   - mkdir -p /opt
-  - wget -q http://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
-  - tar xzf spark-2.4.0-bin-hadoop2.7.tgz
-  - rm spark-2.4.0-bin-hadoop2.7.tgz
+  - wget -q http://apache.osuosl.org/spark/spark-2.4.7/spark-2.4.7-bin-hadoop2.7.tgz
+  - tar xzf spark-2.4.7-bin-hadoop2.7.tgz
+  - rm spark-2.4.7-bin-hadoop2.7.tgz
   - pwd
   # Not a good approch, need to fix it to get current working dir and use it
   - export SPARK_HOME=/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7
