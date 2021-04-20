@@ -12,6 +12,7 @@ before_install:
   - tar xzf spark-2.4.0-bin-hadoop2.7.tgz
   - rm spark-2.4.0-bin-hadoop2.7.tgz
   - pwd
+  # Not a good approch, need to fix it to get current working dir and use it
   - export SPARK_HOME=/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7
   - export PATH=$PATH:/home/travis/build/vikassingh1000/pyspark_data_validation_utils/spark-2.4.0-bin-hadoop2.7/bin
   - export PYTHONPATH="$(pwd)"
