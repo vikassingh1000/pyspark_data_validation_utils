@@ -1,6 +1,6 @@
 pyspark_data_validation_utils
 #####
- |Build-Status| |LICENCE|
+ |Build-Status| |LICENCE| |codecov|
 
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
