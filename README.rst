@@ -6,5 +6,5 @@ pyspark_data_validation_utils
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
 .. |LICENCE| image:: https://img.shields.io/badge/License-MIT-yellow.svg
   :target: https://pypi.python.org/pypi/strct
-.. |codecov| image:: https://codecov.io/gh/CVxTz/DeepTabular/branch/master/graph/badge.svg 
-  :target: https://codecov.io/gh/CVxTz/DeepTabular
+.. |codecov| image:: https://codecov.io/gh/vikassingh1000/pyspark_data_validation_utils/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/vikassingh1000/pyspark_data_validation_utils
