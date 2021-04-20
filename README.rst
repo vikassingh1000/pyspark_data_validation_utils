@@ -8,6 +8,7 @@ pyspark_data_validation_utils
   :target: https://pypi.python.org/pypi/strct
 .. |codecov| image:: https://codecov.io/gh/vikassingh1000/pyspark_data_validation_utils/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/vikassingh1000/pyspark_data_validation_utils
+.. |PyPI-version| image::  https://badge.fury.io/py/pyspark-data-validation-utils.svg
+  :target: https://badge.fury.io/py/pyspark-data-validation-utils
+
  
-..|PyPI-version| image :: https://badge.fury.io/py/pyspark-data-validation-utils.svg
-   :target: https://badge.fury.io/py/pyspark-data-validation-utils
