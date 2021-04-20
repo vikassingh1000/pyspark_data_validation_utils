@@ -1,53 +1,29 @@
-"""Setup for the strct package."""
+import os
 
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from setuptools import (
-    setup,
-    find_packages,
-)
+from setuptools import setup
 
 
-
-INSTALL_REQUIRES = []
-TEST_REQUIRES = [
-    # testing and coverage
-    'pytest', 'coverage', 'pytest-cov',
-    # non-testing packagesrequired by tests, not by the package
-    'sortedcontainers',
-    # to be able to run `python setup.py checkdocs`
-    'collective.checkdocs', 'pygments',
-]
+# Utility function to read the README file.
+# Used for the long_description.  It's nice, because now 1) we have a top level
+# README file and 2) it's easier to type in the README file than to put a raw
+# string in below ...
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
 setup(
-    name='script',
-    description=("Utiltiltes for Pyspakr validation."),
-    long_description="Long desc",
+    name="pyspark_data_validation_utils",
+    version="0.0.21",
     author="Vikas Singh",
     author_email="vikassingh1000@gmail.com",
-    version=.1,
-    url='https://github.com/vikassingh1000/pyspark_data_validation_utils',
-    license="MIT",
-    packages=find_packages(exclude=['dist', 'docs', 'tests']),
-    python_requires=">=3.5",
-    install_requires=INSTALL_REQUIRES,
-    extras_require={
-        'test': TEST_REQUIRES
-    },
-    setup_requires=INSTALL_REQUIRES,
-    platforms=['any'],
-    keywords='python list dict set sortedlist',
+    description="Its Data cleansing tool, meant for Pyspark projects. ",
+    license="APACHE",
+    keywords="Pyspark",
+    url="https://github.com/vikassingh1000/pyspark_data_validation_utils",
+    packages=["pyspark_data_validation_utils"],
     classifiers=[
-        # Trove classifiers
-        # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3.7',
-        'Topic :: Software Development :: Libraries',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Intended Audience :: Developers',
+        "Development Status :: 3 - Alpha",
+        "Topic :: Utilities",
+        "License :: OSI Approved :: BSD License",
     ],
 )
