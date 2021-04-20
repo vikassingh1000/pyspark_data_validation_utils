@@ -22,7 +22,7 @@ install:
   - pip install codecov
   - pip install pytest-cov
 script:
-  - pytest --cov-report=xml --cov=pyspark_data_validation_utils/script/org/validator tests/
+  - pytest --cov-report=xml --cov=script/org/validator tests/
 after_success:
   - codecov
 #after_success:
