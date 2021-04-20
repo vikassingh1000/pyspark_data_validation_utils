@@ -25,6 +25,8 @@ script:
   - pytest --cov-report=xml --cov=script/org/validator tests/
 after_success:
   - codecov
+before_install:
+  - cd pyspark_data_validation_utils
 deploy:
   provider: pypi
   user: "__token__"
