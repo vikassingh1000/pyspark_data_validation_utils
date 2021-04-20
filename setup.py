@@ -1,6 +1,10 @@
 import os
 
-from setuptools import setup
+from setuptools import (
+    setup,
+    find_packages,
+)
+
 
 
 # Utility function to read the README file.
@@ -20,7 +24,7 @@ setup(
     license="APACHE",
     keywords="Pyspark",
     url="https://github.com/vikassingh1000/pyspark_data_validation_utils",
-    packages=["../pyspark_data_validation_utils"],
+    packages= find_packages(exclude=['dist', 'docs', 'tests']),
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",
