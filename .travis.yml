@@ -25,5 +25,11 @@ script:
   - pytest --cov-report=xml --cov=script/org/validator tests/
 after_success:
   - codecov
-#after_success:
-#  - codecov
+deploy:
+  provider: pypi
+  user: "__token__"
+  password: $PYPI_TOKEN
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+  on:
+    branch: master
