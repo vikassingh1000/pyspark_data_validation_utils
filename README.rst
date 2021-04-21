@@ -16,8 +16,20 @@ Data cleansing is needed for all ETL/Data lake solutions.
 Spark is preferred technology for custom solutions.
 
 In most of the case we usally perform following validation on data
- - Not Null 
- - Empty 
+.. Validator::
+
+.. section-numbering::
+  Not Null 
+ ============
+ Install ``strct`` with:
+
+.. code-block:: bash
+
+  pip install strct
+
+
+Empty
+===
  - Date format
  - Validate allowed domain values
  - Validate forbid domain values
