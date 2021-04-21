@@ -14,31 +14,25 @@ In most of the case we usally perform following validation on data
 
 Not Null 
 ============
-Checking if Column value is not null or not. Below is the sample code for it
-
-.. code-block:: python
+Checking if Column value is not null or not. Please refer sample example. 
 
 
- column_to_validation_dict = {
-        "a": [NotNullValidator()],
-        "b": [NotNullValidator()],
-    }
+Empty
+=======
+Checking if Column value is not empty or not. Please refer sample example. 
 
+Date format
+===========
+To check if source has passed correct date format. It can validate all format supported by SimpleDateDormat in Java
 
-    test_df = spark_session.createDataFrame([[1, "dummy"], [2, ""]], "a: int, b: string")
+Validate allowed domain values
+===============================
+This can be used to check if record have one of value from validate dataset.
+Ex: In some case for account_type column ['Saving', 'Current'] could be only validate values.
 
-    excep_record_handler = DefaultExceptionRecordHandler()
-    val_builder = ValidatorBuilder()
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(column_to_validation_dict).add_validate_rec_df(test_df).build()
-    valid_df,invalid_df = data_val.validate()
-
-
-
-Use
-===
-
-``strct`` is divided into five sub-modules:
-
+Validate forbid domain values
+===============================
+This can be used to check if record does not have one of value from invalidate dataset.
 
  
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
