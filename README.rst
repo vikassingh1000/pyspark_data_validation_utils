@@ -8,13 +8,15 @@ Spark is preferred technology for custom solutions.
 
 In most of the case we usally perform following validation on data
 
-.. Validator::
-
 .. section-numbering::
 
-Installation
+Not Null 
 ============
+.. code-block:: bash
 
+  pip install strct
+ 
+ 
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
 .. |LICENCE| image:: https://img.shields.io/badge/License-MIT-yellow.svg
