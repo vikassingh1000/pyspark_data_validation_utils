@@ -14,6 +14,7 @@ pyspark_data_validation_utils
  
 Data cleansing is needed for all ETL/Data lake solutions.
 Spark is preferred technology for custom solutions.
+
 In most of the case we usally perform following validation on data
  - Not Null 
  - Empty 
