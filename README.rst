@@ -14,11 +14,24 @@ In most of the case we usally perform following validation on data
 
 Not Null 
 ============
-.. code-block:: bash
+Checking if Column value is not null or not. Below is the sample code for it
 
-  pip install strct
- 
- Use
+.. code-block:: python
+ column_to_validation_dict = {
+        "a": [NotNullValidator()],
+        "b": [NotNullValidator()],
+    }
+
+
+    test_df = spark_session.createDataFrame([[1, "dummy"], [2, ""]], "a: int, b: string")
+
+    excep_record_handler = DefaultExceptionRecordHandler()
+    val_builder = ValidatorBuilder()
+    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(column_to_validation_dict).add_validate_rec_df(test_df).build()
+    valid_df,invalid_df = data_val.validate()
+
+
+Use
 ===
 
 ``strct`` is divided into five sub-modules:
