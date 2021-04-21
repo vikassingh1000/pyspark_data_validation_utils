@@ -8,6 +8,8 @@ Spark is preferred technology for custom solutions.
 
 In most of the case we usally perform following validation on data
 
+.. contents::
+
 .. section-numbering::
 
 Not Null 
@@ -16,6 +18,12 @@ Not Null
 
   pip install strct
  
+ Use
+===
+
+``strct`` is divided into five sub-modules:
+
+
  
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
