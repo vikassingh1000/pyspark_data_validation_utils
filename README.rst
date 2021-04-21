@@ -34,6 +34,18 @@ Validate forbid domain values
 ===============================
 This can be used to check if record does not have one of value from invalidate dataset.
 
+Data type check
+===============================
+This can be used to check if column has correct datatype or not. (Currently it is not supporting complex Struct type)
+
+Regex check
+======================
+This can be sued to check if String columns has validate value as per regax. Ex: email Id validation or phone number validation etc.
+
+At Least one column present check
+==================================
+In some source provide multiple columns for same purpose, this validator can be used to check if atleast one column has value.
+
  
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
