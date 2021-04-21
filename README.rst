@@ -8,7 +8,7 @@ Spark is preferred technology for custom solutions.
 
 In most of the case we usally perform following validation on data
 
-.. contents::
+.. Validators::
 
 .. section-numbering::
 
@@ -46,6 +46,19 @@ At Least one column present check
 ==================================
 In some source provide multiple columns for same purpose, this validator can be used to check if atleast one column has value.
 
+ This tool is configurable, currently it support following configurations
+ 
+ Custom message
+ ==============
+ All validators commons with commons exception message, this can be changes in following ways
+ 
+ Ex-1 
+ -------------
+ Create a python lambda function and pass it in constractor
+ 
+ .. code-block:: python
+ 
+ custom_msg_lmda_field1 = lambda p_clm, validate_against : sf.lit(f"{p_clm} is empty ")
  
 .. |Build-Status| image:: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils.svg?branch=master
     :target: https://travis-ci.com/vikassingh1000/pyspark_data_validation_utils
