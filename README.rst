@@ -12,3 +12,14 @@ pyspark_data_validation_utils
   :target: https://badge.fury.io/py/pyspark-data-validation-utils
 
  
+Data cleansing is needed for all ETL/Data lake solutions.
+Spark is preferred technology for custom solutions.
+In most of the case we usally perform following validation on data
+ - Not Null 
+ - Empty 
+ - Date format
+ - Validate allowed domain values
+ - Validate forbid domain values
+ - Data type check
+ - Regex check
+ - At Least one column present check
