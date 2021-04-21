@@ -94,7 +94,7 @@ class IExceptionRecordHandler(ABC):
     def handle(self, exception_rec_df) -> DataFrame:
         pass
 
-
+""" Exception class which will be thrown in case of any anomaly """
 class ValidationError(Exception):
     def __init__(self, message, errors):
         # Call the base class constructor with the parameters it needs
