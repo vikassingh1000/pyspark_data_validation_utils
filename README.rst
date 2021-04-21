@@ -17,6 +17,8 @@ Not Null
 Checking if Column value is not null or not. Below is the sample code for it
 
 .. code-block:: python
+
+
  column_to_validation_dict = {
         "a": [NotNullValidator()],
         "b": [NotNullValidator()],
@@ -29,6 +31,7 @@ Checking if Column value is not null or not. Below is the sample code for it
     val_builder = ValidatorBuilder()
     data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_validation_map(column_to_validation_dict).add_validate_rec_df(test_df).build()
     valid_df,invalid_df = data_val.validate()
+
 
 
 Use
