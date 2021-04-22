@@ -19,7 +19,7 @@ In most of the case we usually perform following validation on data. This tool c
 
 
 Not Null 
-********
+****
 Checking if Column value is not null or not. Please refer sample example. 
 
 
