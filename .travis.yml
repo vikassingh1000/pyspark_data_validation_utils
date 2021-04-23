@@ -22,7 +22,8 @@ install:
   - pip install codecov
   - pip install pytest-cov
 script:
-  - pytest --cov-report=xml --cov=script/org/validator tests/
+  #- pytest --cov-report=xml --cov=script/org/validator tests/
+   - mut.py --target /script/org/validator/date_format_validator.py --unit-test /tests/test_date_format_validator.py -m
 after_success:
   - codecov
 deploy:
