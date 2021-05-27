@@ -48,7 +48,7 @@ def test_null_check_custom_msg_with_clm_name(spark_session):
     custom_msg_lmda_field2 = lambda p_clm, validate_against : sf.concat(sf.col("foreign_key"), sf.lit(" is not present in system"))
 
     # p_lookup_clm_nme = "foreign_key" ,p_excep_msg = "Foreign key not present in system: "
-    C_FACT_CLASS_ENTITY_FIELD_TO_VALIDATE_AGAINST = {
+    VALIDATE_AGAINST_MAP  = {
         "field1": [NotNullValidator(custom_msg_lmda = custom_msg_lmda_field1)],
         "field2": [NotNullValidator(custom_msg_lmda = custom_msg_lmda_field2)],
     }
@@ -58,7 +58,7 @@ def test_null_check_custom_msg_with_clm_name(spark_session):
 
     excep_record_handler = DefaultExceptionRecordHandler()
     val_builder = ValidatorBuilder()
-    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_config(config).add_validation_map(C_FACT_CLASS_ENTITY_FIELD_TO_VALIDATE_AGAINST).add_validate_rec_df(test_df).build()
+    data_val = val_builder.add_excp_rec_handler(excep_record_handler).add_config(config).add_validation_map(VALIDATE_AGAINST_MAP ).add_validate_rec_df(test_df).build()
     valid_df,invalid_df = data_val.validate()
     invalid_df.show(10,False)
     print(invalid_df.collect())
